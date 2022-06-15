@@ -16,7 +16,15 @@ export default function Page({
   )
 }
 
+const parseBlogs = (slug: string, blogs) => {
+  const regexp = new RegExp(`${slug}/|.mdx`, 'g')
+
+  return blogs.map((blog) => blog._id.replace(regexp, ''))
+}
+
 export const getStaticPaths: GetStaticPaths = async () => {
+  parseBlogs('blog', allBlogs)
+
   const blogs = allBlogs
     .map((t) =>
       t._id.replace('blog/', '').replace('.mdx', '').replace('index', ''),
